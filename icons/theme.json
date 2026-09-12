@@ -1,0 +1,10 @@
+{
+  "iconDefinitions": {
+    "_csc": {
+      "iconPath": "./csc-file.svg"
+    }
+  },
+  "fileExtensions": {
+    "csc": "_csc"
+  }
+}

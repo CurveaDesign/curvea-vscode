@@ -1,0 +1,170 @@
+{
+  "name": "curvea-language",
+  "displayName": "CurveaScript",
+  "description": "Official CurveaScript language support for .csc files by Curvea Design.",
+  "version": "0.5.0",
+  "publisher": "curvea",
+  "author": {
+    "name": "Curvea Design",
+    "email": "ceo@curveadesign.com",
+    "url": "https://curveadesign.com"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "main": "./extension.js",
+  "homepage": "https://curveadesign.com",
+  "bugs": {
+    "url": "https://github.com/CurveaDesign/curvea-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CurveaDesign/curvea-vscode"
+  },
+  "keywords": [
+    "curvea",
+    "curveascript",
+    "csc",
+    "language support",
+    "templating",
+    "html"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "onLanguage:curvea",
+    "workspaceContains:curvea.config.json",
+    "onCommand:curvea.validateWorkspace",
+    "onCommand:curvea.openRelatedData",
+    "onCommand:curvea.openDocument",
+    "onCommand:curvea.showProjectInfo",
+    "onCommand:curvea.toggleComment"
+  ],
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Formatters",
+    "Linters"
+  ],
+  "scripts": {
+    "check:fixtures": "node ./scripts/check-fixtures.js",
+    "check:grammar": "node ./scripts/check-grammar.js",
+    "check:language": "node ./scripts/check-language.js",
+    "check": "npm run check:fixtures && npm run check:grammar && npm run check:language",
+    "test:unit": "npm run check",
+    "test:integration": "node ./test/runTest.js",
+    "test": "npm run test:unit && npm run test:integration",
+    "package:check": "vsce ls --tree"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "curvea",
+        "aliases": [
+          "CurveaScript",
+          "curveascript"
+        ],
+        "extensions": [
+          ".csc"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "curvea",
+        "scopeName": "source.curvea",
+        "path": "./syntaxes/curvea.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.block.style.curvea": "css",
+          "meta.block.script.curvea": "javascript"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "curvea",
+        "path": "./snippets/curvea.code-snippets"
+      }
+    ],
+    "commands": [
+      {
+        "command": "curvea.validateWorkspace",
+        "title": "CurveaScript: Validate Workspace"
+      },
+      {
+        "command": "curvea.openRelatedData",
+        "title": "CurveaScript: Open Related Page Data"
+      },
+      {
+        "command": "curvea.openDocument",
+        "title": "CurveaScript: Open Document Shell"
+      },
+      {
+        "command": "curvea.showProjectInfo",
+        "title": "CurveaScript: Show Project Info"
+      },
+      {
+        "command": "curvea.toggleComment",
+        "title": "CurveaScript: Toggle Context Comment"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "curvea.toggleComment",
+        "key": "ctrl+/",
+        "mac": "cmd+/",
+        "when": "editorTextFocus && editorLangId == curvea"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "curvea.openRelatedData",
+          "when": "editorLangId == curvea",
+          "group": "navigation@10"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "CurveaScript",
+      "properties": {
+        "curvea.diagnostics.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable engine-aligned CurveaScript diagnostics."
+        },
+        "curvea.diagnostics.unusedImports": {
+          "type": "boolean",
+          "default": true,
+          "description": "Report component imports that are not used in the current file."
+        },
+        "curvea.completions.autoImport": {
+          "type": "boolean",
+          "default": true,
+          "description": "Add the matching @import when accepting an unimported component completion."
+        }
+      }
+    },
+    "iconThemes": [
+      {
+        "id": "curvea-icons",
+        "label": "Curvea Icons",
+        "path": "./icons/theme.json"
+      }
+    ]
+  },
+  "dependencies": {
+    "vscode-html-languageservice": "^5.6.2",
+    "vscode-languageserver-textdocument": "^1.0.14"
+  },
+  "devDependencies": {
+    "@types/vscode": "1.85.0",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.9.2",
+    "mocha": "^11.8.0"
+  }
+}

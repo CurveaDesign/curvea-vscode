@@ -1,0 +1,83 @@
+{
+  "name": "CurveaScript",
+  "scopeName": "source.curvea",
+  "patterns": [
+    { "include": "#declarations" },
+    { "include": "#setupDirectives" },
+    { "include": "#contentBlocks" },
+    { "include": "#flowDirectives" },
+    { "include": "#interpolation" },
+    { "include": "#componentTags" },
+    { "include": "text.html.basic" }
+  ],
+  "repository": {
+    "declarations": {
+      "patterns": [
+        { "name": "meta.declaration.page.curvea", "match": "^\\s*(@page)\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" } } },
+        { "name": "meta.declaration.document.curvea", "match": "^\\s*(@document)\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" } } },
+        { "name": "meta.declaration.layout.curvea", "match": "^\\s*(@layout)\\s+([A-Z][A-Za-z0-9]*)(?:(\\()([^)]*)(\\)))?\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" }, "2": { "name": "entity.name.type.layout.curvea" }, "3": { "name": "punctuation.section.parameters.begin.curvea" }, "4": { "name": "meta.parameters.curvea variable.parameter.curvea" }, "5": { "name": "punctuation.section.parameters.end.curvea" } } },
+        { "name": "meta.declaration.component.curvea", "match": "^\\s*(@component)\\s+([A-Z][A-Za-z0-9]*)(\\()([^)]*)(\\))\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" }, "2": { "name": "entity.name.type.component.curvea" }, "3": { "name": "punctuation.section.parameters.begin.curvea" }, "4": { "name": "meta.parameters.curvea variable.parameter.curvea" }, "5": { "name": "punctuation.section.parameters.end.curvea" } } }
+      ]
+    },
+    "setupDirectives": {
+      "patterns": [
+        { "name": "meta.directive.use.curvea", "match": "^\\s*(@use)\\s+([A-Za-z0-9_\\-/]+)(?:(\\()([^)]*)(\\)))?\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" }, "2": { "name": "entity.name.type.layout.curvea" }, "3": { "name": "punctuation.section.arguments.begin.curvea" }, "4": { "name": "meta.arguments.curvea" }, "5": { "name": "punctuation.section.arguments.end.curvea" } } },
+        { "name": "meta.directive.import.curvea", "match": "^\\s*(@import)\\s+(\\S.*?)\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" }, "2": { "name": "entity.name.type.import.curvea" } } },
+        { "name": "meta.directive.load.curvea", "match": "^\\s*(@load)\\s+(\\S+)(?:\\s+(as)\\s+([A-Za-z_][A-Za-z0-9_]*))?\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" }, "2": { "name": "entity.name.type.data.curvea" }, "3": { "name": "keyword.operator.assignment.curvea" }, "4": { "name": "variable.other.readwrite.alias.curvea" } } },
+        { "name": "meta.directive.paginate.curvea", "match": "^\\s*(@paginate)\\s+([A-Za-z_][A-Za-z0-9_]*)\\s+(by)\\s+(\\d+)\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" }, "2": { "name": "variable.other.readwrite.alias.curvea" }, "3": { "name": "keyword.operator.curvea" }, "4": { "name": "constant.numeric.curvea" } } }
+      ]
+    },
+    "assignmentComments": {
+      "patterns": [
+        { "name": "comment.line.number-sign.curvea", "match": "^\\s*#.*$" },
+        { "name": "comment.line.double-slash.curvea", "match": "^\\s*//.*$" }
+      ]
+    },
+    "assignmentValues": {
+      "patterns": [
+        { "include": "#assignmentComments" },
+        { "include": "#interpolation" },
+        { "name": "variable.other.assignment.curvea", "match": "\\b[A-Za-z_][A-Za-z0-9_.-]*\\b(?=\\s*=)" },
+        { "name": "keyword.operator.assignment.curvea", "match": "=" },
+        { "name": "constant.language.curvea", "match": "\\b(?:true|false|null)\\b" },
+        { "name": "constant.numeric.curvea", "match": "(?<![A-Za-z0-9_])-?\\d+(?:\\.\\d+)?\\b" },
+        { "name": "string.quoted.double.curvea", "begin": "\"", "end": "\"" },
+        { "name": "string.quoted.single.curvea", "begin": "'", "end": "'" }
+      ]
+    },
+    "contentBlocks": {
+      "patterns": [
+        { "name": "meta.block.data.curvea", "begin": "^\\s*(@data)\\s*$", "beginCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "end": "^\\s*(@end)\\s*$", "endCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "patterns": [{ "include": "#assignmentValues" }] },
+        { "name": "meta.block.seo.curvea", "begin": "^\\s*(@seo)\\s*$", "beginCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "end": "^\\s*(@end)\\s*$", "endCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "patterns": [{ "include": "#assignmentValues" }] },
+        { "name": "meta.block.code.curvea", "begin": "^\\s*(@code)\\s*$", "beginCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "contentName": "markup.raw.block.curvea", "end": "^\\s*(@endcode)\\s*$", "endCaptures": { "1": { "name": "keyword.control.directive.curvea" } } },
+        { "name": "meta.directive.code-expression.curvea", "match": "^\\s*(@code)\\s+([A-Za-z_][A-Za-z0-9_.]*)\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" }, "2": { "name": "variable.other.readwrite.curvea" } } },
+        { "name": "meta.block.style.curvea", "begin": "^\\s*(@style)\\s*$", "beginCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "end": "^\\s*(@end)\\s*$", "endCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "patterns": [{ "include": "source.css" }] },
+        { "name": "meta.block.script.curvea", "begin": "^\\s*(@script)\\s*$", "beginCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "end": "^\\s*(@end)\\s*$", "endCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "patterns": [{ "include": "source.js" }] }
+      ]
+    },
+    "flowDirectives": {
+      "patterns": [
+        { "name": "meta.directive.endcode.curvea", "match": "^\\s*(@endcode)\\s*$", "captures": { "1": { "name": "keyword.control.directive.curvea" } } },
+        { "name": "meta.directive.branch.curvea", "begin": "^\\s*(@(?:elseif|else))\\b", "beginCaptures": { "1": { "name": "keyword.control.conditional.curvea" } }, "end": "$", "patterns": [{ "include": "#flowExpression" }] },
+        { "name": "meta.directive.flow.curvea", "begin": "^\\s*(@(?:if|for|end))\\b", "beginCaptures": { "1": { "name": "keyword.control.directive.curvea" } }, "end": "$", "patterns": [{ "include": "#flowExpression" }] }
+      ]
+    },
+    "flowExpression": {
+      "patterns": [
+        { "name": "keyword.operator.comparison.curvea", "match": "==|!=|>=|<=|>|<" },
+        { "name": "keyword.operator.loop.curvea", "match": "\\b(?:in|limit|offset|sort|asc|desc)\\b" }
+      ]
+    },
+    "interpolation": {
+      "patterns": [
+        { "name": "meta.interpolation.curvea", "begin": "\\{\\{", "beginCaptures": { "0": { "name": "punctuation.definition.interpolation.begin.curvea" } }, "end": "\\}\\}", "endCaptures": { "0": { "name": "punctuation.definition.interpolation.end.curvea" } }, "patterns": [{ "name": "support.variable.global.curvea", "match": "\\bCurrentYear\\b" }, { "name": "variable.other.readwrite.curvea", "match": "\\b[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*\\b" }] }
+      ]
+    },
+    "componentTags": {
+      "patterns": [
+        { "name": "meta.tag.component.curvea", "match": "(</)([A-Z][A-Za-z0-9]*)(\\s*)(>)", "captures": { "1": { "name": "punctuation.definition.tag.begin.html" }, "2": { "name": "entity.name.tag.component.curvea" }, "4": { "name": "punctuation.definition.tag.end.html" } } },
+        { "name": "meta.tag.component.curvea", "begin": "(<)([A-Z][A-Za-z0-9]*)(?=[\\s/>])", "beginCaptures": { "1": { "name": "punctuation.definition.tag.begin.html" }, "2": { "name": "entity.name.tag.component.curvea" } }, "end": "(/?>)", "endCaptures": { "1": { "name": "punctuation.definition.tag.end.html" } }, "patterns": [{ "include": "#interpolation" }, { "name": "entity.other.attribute-name.component.curvea", "match": "\\b([A-Za-z_:][A-Za-z0-9_:\\.-]*)(?=\\s*=)" }, { "name": "string.quoted.double.html", "begin": "\"", "end": "\"", "patterns": [{ "include": "#interpolation" }] }, { "name": "string.quoted.single.html", "begin": "'", "end": "'", "patterns": [{ "include": "#interpolation" }] }] }
+      ]
+    }
+  }
+}

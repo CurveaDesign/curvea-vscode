@@ -1,0 +1,14 @@
+{
+  "version": "0.4.0",
+  "configurations": [
+    {
+      "name": "Run Curvea Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}"
+      ]
+    }
+  ]
+}
